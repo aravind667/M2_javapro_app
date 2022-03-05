@@ -272,7 +272,7 @@ public class Menu {
                 storage[y] = myHotel[y].getName();
             }
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter("data.txt", false)); //used false to overwrite the file instead of appending
+            BufferedWriter bw = new BufferedWriter(new FileWriter("data.txt", false)); 
             for (int x = 1; x < storage.length; x++) {
                 String file;
                 file = storage[x];
