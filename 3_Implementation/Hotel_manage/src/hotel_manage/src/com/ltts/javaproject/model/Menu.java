@@ -1,4 +1,4 @@
-package hotel_manage;
+package com.ltts.javaproject.model;
 
 import java.io.*;
 import java.util.ArrayList;

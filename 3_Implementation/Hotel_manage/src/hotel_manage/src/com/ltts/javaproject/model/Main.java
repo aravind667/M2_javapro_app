@@ -1,4 +1,4 @@
-package hotel_manage;
+package com.ltts.javaproject.model;
 
 
 public class Main {
