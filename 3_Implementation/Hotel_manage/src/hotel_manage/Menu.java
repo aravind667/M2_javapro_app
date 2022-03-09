@@ -1,7 +1,9 @@
 package hotel_manage;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -14,8 +16,45 @@ public class Menu {
     static String roomName;
     static int roomNum = 1;
     static String answer;
+    class Product {
+  	  // properties
+  	  private String pname;
+  	  private int qty;
+  	  private double price;
+  	  private double totalPrice;
 
-    Queue queueObj = new Queue(); //Creating an object of the Queue class
+  	  // constructor
+  	  Product(String pname, int qty, 
+  	              double price, double totalPrice) {
+  	    this.pname = pname;
+  	    this.qty = qty;
+  	    this.price = price;
+  	    this.totalPrice = totalPrice;
+  	  }
+
+  	  // getter methods
+  	  public String getPname() {
+  	    return pname;
+  	  }
+  	  public int getQty() {
+  	    return qty;
+  	  }
+  	  public double getPrice() {
+  	    return price;
+  	  }
+  	  public double getTotalPrice() {
+  	    return totalPrice;
+  	  }
+
+
+  	  // display
+  	  public void display() {
+  	    System.out.format("%-9s %8d %10.2f %10.2f\n", 
+  	         pname, qty, price, totalPrice);
+  	  }
+  	}
+
+    Queue queueObj = new Queue(); 
 
     public void menu() {
         System.out.println("======================================================");
@@ -23,13 +62,14 @@ public class Menu {
         System.out.println("======================================================");
         System.out.println("* A. View all the rooms                              *");
         System.out.println("* B. Add customer to room                            *");
-        System.out.println("* C. Display Empty rooms                             *");
+        System.out.println("* C. Display avilable  rooms                         *");
         System.out.println("* D. Delete customer from room                       *");
-        System.out.println("* E. Find room from customer name                    *");
-        System.out.println("* F. Store program array data into a text file       *");
-        System.out.println("* G. Load program data back from the file            *");
+        System.out.println("* E. Find room by customer name                      *");
+        System.out.println("* F. Store  data                                     *");
+        System.out.println("* G. Load  data                                      *");
         System.out.println("* H. View rooms Ordered alphabetically by name       *");
         System.out.println("* I. Display the names of the first 3 customers      *");
+        System.out.println("* J. Shopping                                        *");
         System.out.println("* Q. Quit Program                                    *");
         System.out.println("======================================================");
         System.out.println("");
@@ -79,6 +119,11 @@ public class Menu {
                     queueObj.displayQueue();
                     menu();
                     break;
+                    
+                case "j":
+                    Shopping();
+                    break;
+
 
                 case "q":
                     System.out.println("Thanks");
@@ -90,12 +135,69 @@ public class Menu {
         }
         while (!(choice.equalsIgnoreCase("a") || choice.equalsIgnoreCase("b") || choice.equalsIgnoreCase("c") || choice.equalsIgnoreCase("d") ||
                 choice.equalsIgnoreCase("f") || choice.equalsIgnoreCase("e") || choice.equalsIgnoreCase("g") || choice.equalsIgnoreCase("h") ||
-                choice.equals("i") || choice.equalsIgnoreCase("q"))); 
+                choice.equalsIgnoreCase("i") || choice.equalsIgnoreCase("q") || choice.equalsIgnoreCase("j"))); 
     }
 
-    public void initialize() {
+    public void Shopping() {
+    	 // variables
+	    String productName = null;
+	    int quantity = 0;
+	    double price = 0.0;
+	    double totalPrice = 0.0;
+	    double overAllPrice = 0.0;
+	    char choice = '\0';
+
+	    Scanner scan = new Scanner(System.in);
+
+	    List<Product> product = new ArrayList<Product>();
+
+	    do {
+	      System.out.println("Enter product details,");
+	      System.out.print("Name: ");
+	      productName = scan.nextLine();
+	      System.out.print("Quantity: ");
+	      quantity = scan.nextInt();
+	      System.out.print("Price (per item): ");
+	      price = scan.nextDouble();
+
+	      totalPrice = price * quantity;
+
+	   
+	      overAllPrice += totalPrice;
+
+	      
+	      product.add( new Product(
+	          productName, quantity, price, totalPrice) );
+
+	     
+	      System.out.print("Want to add more item? (y or n): ");
+	      choice = scan.next().charAt(0);
+
+	      scan.nextLine();
+	    } while (choice == 'y' || choice == 'Y');
+
+	     displayFormat();
+	    for (Product p : product) {
+	      p.display();
+	    }
+
+	    System.out.println("\nTotal Price = " + overAllPrice);
+	    System.out.println("\n ----Thanks for comming --- visit again----");
+	    scan.nextLine();
+
+	    menu();
+	  }
+
+	private void displayFormat() {
+		System.out.print(
+    	        "\nName      Quantity    Price   Total Price\n");
+		
+		
+	}
+
+	public void initialize() {
         for (int x = 1; x < 11; x++) {
-            myHotel[x] = new Room(); //Creating 10 Room Objects
+            myHotel[x] = new Room(); 
         }
     }
 
@@ -105,12 +207,13 @@ public class Menu {
           
             if (!myHotel[x].getName().equals("e")) {
                 System.out.println("Room No. " + x + " occupied by " + myHotel[x].getName());
-                //This will display the rooms which are currently Empty
+             
             } else {
                 System.out.println("Room No. " + x + " is empty");
             }
 
         }
+        input.nextLine();
         menu();
     }
 
@@ -122,12 +225,12 @@ public class Menu {
             try {
                 System.out.println("Enter room number (1-10)");
                 roomNum = input.nextInt();
-                //checks whether the room is already occupied or not
+             
                 if (!myHotel[roomNum].getName().equals("e")) {
                     invalidRoomNumber = true;
                     System.out.println("This room is occupied by: Mr. " + myHotel[roomNum].getName());
                     System.out.println("");
-                    //checks whether the input is within the proper range
+                    
                 } else if (roomNum >= 1 && roomNum < 11) {
                     invalidRoomNumber = false;
                     //Error message to be displayed
@@ -192,6 +295,7 @@ public class Menu {
             }
         }
         System.out.println("");
+        input.nextLine();
         menu();
     }
 
@@ -235,6 +339,7 @@ public class Menu {
         System.out.println("Room " + roomNum + " has successfully been vacated");
 
         System.out.println("");
+        input.nextLine();
         menu();
     }
 
@@ -258,6 +363,7 @@ public class Menu {
         if (found == false) {
             System.out.println(find + " doesn't exist on our database");
             System.out.println("");
+            input.nextLine();
             menu();
         }
     }
@@ -297,6 +403,7 @@ public class Menu {
         //message to show the user that the array data has been saved to a Text file successfully
         System.out.println("Data successfully saved!");
         System.out.println("");
+        input.nextLine();
         menu();
     }
 
@@ -322,6 +429,7 @@ public class Menu {
         //Displays this message if the file is found and successfully loaded the data back from it
         System.out.println("File successfully loaded");
         System.out.println("");
+        input.nextLine();
         menu();
     }
 
@@ -370,9 +478,13 @@ public class Menu {
             }
         }
         System.out.println("");
+        input.nextLine();
         menu();
 
     }
-
 }
+    
+    
+
+
 
