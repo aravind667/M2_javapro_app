@@ -11,6 +11,7 @@ public class Menu {
     Scanner input = new Scanner(System.in);
 
     Room[] myHotel = new Room[11];
+    booking bk=new booking();
 
     static String choice;
     static String roomName;
@@ -65,8 +66,8 @@ public class Menu {
         System.out.println("* C. Display avilable  rooms                         *");
         System.out.println("* D. Delete customer from room                       *");
         System.out.println("* E. Find room by customer name                      *");
-        System.out.println("* F. Store  data                                     *");
-        System.out.println("* G. Load  data                                      *");
+        System.out.println("* F. Booking of room                                 *");
+        System.out.println("* G. Display data                                    *");
         System.out.println("* H. View rooms Ordered alphabetically by name       *");
         System.out.println("* I. Display the names of the first 3 customers      *");
         System.out.println("* J. Shopping                                        *");
@@ -104,11 +105,13 @@ public class Menu {
                     break;
 
                 case "f":
-                    storeData();
+                	bk.getdata();
+                	bk.show();
                     break;
 
                 case "g":
-                    retrieveData();
+                    bk.show();
+                    menu();
                     break;
 
                 case "h":
@@ -407,31 +410,6 @@ public class Menu {
         menu();
     }
 
-    public void retrieveData() {
-
-        try {
-            //reading Data from the Text File
-            BufferedReader reader = new BufferedReader(new FileReader("data.txt"));
-
-            for (int x = 1; x < 11; x++) {
-                String read = reader.readLine(); //Reads String value stored in the Text File
-                if (read.equals("Empty Room " + x)) {
-                    read = "e";
-                }
-                //Stored the data in the Hotel Array
-                myHotel[x].setName(read);
-            }
-
-            //will catch this exception if the Text file is not found
-        } catch (IOException e) {
-            System.err.println("File not found!");
-        }
-        //Displays this message if the file is found and successfully loaded the data back from it
-        System.out.println("File successfully loaded");
-        System.out.println("");
-        input.nextLine();
-        menu();
-    }
 
     public void alphabeticalOrder() {
 
