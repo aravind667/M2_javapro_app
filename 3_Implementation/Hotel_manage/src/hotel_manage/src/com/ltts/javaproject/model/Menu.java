@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Menu {
+public class Menu  {
 
     Scanner input = new Scanner(System.in);
 
@@ -17,7 +17,7 @@ public class Menu {
     static String roomName;
     static int roomNum = 1;
     static String answer;
-    class Product {
+    class  Product  extends Room{
   	  // properties
   	  private String pname;
   	  private int qty;
@@ -75,7 +75,7 @@ public class Menu {
         System.out.println("======================================================");
         System.out.println("");
 
-        System.out.println("Choose one of the options from above. (E.g: Type '1' to view all the rooms)");
+        System.out.println("Choose one of the options from above. (E.g: Type 'A' to view all the rooms)");
 
         do {
             System.out.println();
@@ -129,6 +129,7 @@ public class Menu {
 
 
                 case "q":
+                	 new Room().run(); 
                     System.out.println("Thanks");
                     break;
 
@@ -461,8 +462,9 @@ public class Menu {
 
     }
 }
-    
-    
+
+	    
+	  
 
 
 

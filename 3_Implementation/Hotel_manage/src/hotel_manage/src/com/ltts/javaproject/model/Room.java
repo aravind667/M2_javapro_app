@@ -18,6 +18,7 @@ public class Room {
     public String getName() {
         return mainName;
     }
+    final void run(){System.out.println("Quiting.............");}
 
     
 }

@@ -8,7 +8,9 @@ void show();
 }
 
 class booking implements hotel
+
 {
+	
 int n=0;
 
 booking()
@@ -79,7 +81,7 @@ System.out.print("\nPlz enter a valid  mobile no ");
 }
 
 }
-public void show()
+public  void show()
 {
 int i=0;
 System.out.print("\nNumber Of Customers : "+n);
